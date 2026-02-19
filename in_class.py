@@ -37,17 +37,34 @@ print("Labels:",kmeans.labels_)
 # %%
 # add the cluster labels to the original data frame
 
-
+df["clusters"] = kmeans.labels_
 
 # %%
 
-
+print(df)
 
 # %% simple plot of the clusters
 help(plt.scatter)
 
+# %%
+
+plt.scatter(data=df, x="nay", y="aye", c="clusters")
 
 
 # %%
+#use a for loop to check different cluster numbers and see how the inertia changes
 
+inertias = []
+k_values= range(1,10)
 
+for k in k_values:
+    kmeans = KMeans(n_clusters=k, random_state=42)
+    kmeans.fit(c_num)
+    inertias.append(kmeans.inertia_)
+
+# %%
+plt.figure(figsize=(10,5))
+plt.plot(k_values, inertias, marker="o")
+plt.xlabel("# of Clusters (k)")
+plt.ylabel("Inertia")
+plt.show()
